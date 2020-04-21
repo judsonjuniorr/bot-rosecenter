@@ -6,6 +6,7 @@ import Database from '../util/Database';
 import EmbedMessage from '../util/EmbedMessage';
 import ItemQueryService from '../services/ItemQueryService';
 import ItemDropService from '../services/ItemDropService';
+import Logger from '../util/Logger';
 
 class ItemCommand implements Command {
   commandNames = ['item', 'i'];
@@ -25,6 +26,13 @@ class ItemCommand implements Command {
     const botAvatar = bot.user?.avatarURL() || undefined;
     const botName = bot.user?.username;
 
+    const log = Logger.item({
+      request: `${username}#${discriminator}`,
+      query: argsString,
+    });
+
+    log.info(`REQUEST`);
+
     await originalMessage.delete();
     const embed = new EmbedMessage().generateEmbed({
       title: 'Pesquisa de item',
@@ -43,9 +51,9 @@ class ItemCommand implements Command {
     });
     const message = await originalMessage.reply(embed);
 
+    const db = new Database().db();
+    await db.connect();
     try {
-      const db = new Database().db();
-      await db.connect();
       const itemDB = await new ItemQueryService(db).execute(argsString);
 
       if (!itemDB) {
@@ -64,6 +72,7 @@ class ItemCommand implements Command {
           },
         });
         await message.edit(notFoundEmbed);
+        log.warn('NOT FOUND');
       } else {
         const howToGet = itemDB.htg.split(',').map(htg => {
           switch (htg) {
@@ -114,16 +123,18 @@ class ItemCommand implements Command {
 
         await message.edit(itemEmbed);
 
-        const dropService = new ItemDropService({
-          drops: itemDB.dropp,
-          embed: itemEmbed,
-          db,
-          message,
-        });
-        await dropService.execute();
-      }
+        if (howToGet.includes('Drop')) {
+          const dropService = new ItemDropService({
+            drops: itemDB.dropp,
+            embed: itemEmbed,
+            db,
+            message,
+          });
+          await dropService.execute();
+        }
 
-      await db.end();
+        log.info('SEND');
+      }
     } catch (error) {
       const errorEmbed = new EmbedMessage().generateEmbed({
         title: 'Erro ao buscar o item',
@@ -141,8 +152,9 @@ class ItemCommand implements Command {
       });
 
       message.edit(errorEmbed);
-      console.log(error);
+      log.error('ERROR');
     }
+    await db.end();
   }
 }
 

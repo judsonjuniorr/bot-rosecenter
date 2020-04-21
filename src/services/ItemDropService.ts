@@ -56,7 +56,6 @@ class ItemDropService {
         results = results.slice(0, -1);
         results.push('\n⚠️ Confira mais clicando em detalhes');
       }
-      console.log(results.join('\n'), results.join('\n').length);
       this.embed.fields[dropFieldIndex].value = results.join('\n');
     } catch (error) {
       this.embed.fields[dropFieldIndex].value =
