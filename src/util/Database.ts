@@ -1,16 +1,4 @@
 import sql from 'mysql';
-import ItemQueryService from '../services/ItemQueryService';
-
-interface ItemQuery {
-  id: number;
-  name: string;
-  htg: string;
-  descr: string;
-  dropp: string;
-  type: string;
-  category?: string;
-  subcat?: string;
-}
 
 class Database {
   private connection: sql.Connection;
@@ -24,14 +12,28 @@ class Database {
     });
   }
 
-  async itemQuery(name: string): Promise<ItemQuery | undefined> {
-    await this.connection.connect();
+  db(): sql.Connection {
+    // Add handlers.
+    // this.addDisconnectHandler();
 
-    const query = new ItemQueryService(this.connection);
-    const item = await query.execute(name);
+    // this.connection.connect();
+    // console.log('Connected to database.');
+    return this.connection;
+  }
 
-    this.connection.end();
-    return item;
+  private addDisconnectHandler(): void {
+    this.connection.on('error', error => {
+      if (error instanceof Error) {
+        if (error.code === 'PROTOCOL_CONNECTION_LOST') {
+          console.error(error.stack);
+          console.log('Lost connection. Reconnecting...');
+
+          this.db();
+        } else if (error.fatal) {
+          throw error;
+        }
+      }
+    });
   }
 }
 
