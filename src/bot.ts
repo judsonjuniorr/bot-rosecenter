@@ -9,6 +9,7 @@ import BotErrorService from './services/BotErrorService';
 import BotMessageService from './services/BotMessageService';
 
 dotenv.config();
+process.setMaxListeners(0);
 
 class Bot {
   private client = new Discord.Client();
