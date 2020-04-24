@@ -13,6 +13,10 @@ class Aliases {
       item: 'Platinum Bow',
       alias: ['plantium bow'],
     },
+    {
+      item: 'Chronicle Staff',
+      alias: ['Chronic staff'],
+    },
   ];
 
   public find(name: string): string {

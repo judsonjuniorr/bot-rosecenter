@@ -16,7 +16,7 @@ class ScheduledMessages {
     this.client = client;
     this.channels.push('630536497807884302'); // geral RoseOn
     // this.channels.push('698959005833494579'); // staff rosecenter RoseOn
-    // this.channels.push('699698186734010471'); // geral Server Teste
+    this.channels.push('699698186734010471'); // geral Server Teste
   }
 
   public iz(): void {
@@ -28,7 +28,7 @@ class ScheduledMessages {
       if (!channel) return undefined;
 
       this.schedule({
-        time: '20 0 * * *',
+        time: '0 20 * * *',
         channel,
         message:
           '@everyone BOOOOOOORA QUE VAI COMEÇAR A **INVASÃO DE ZANT**!!\n CORRE LOGO QUE AS INSCRIÇÕES JÁ ESTÃO LIBERADAS!!\n\nNPC de Inscrição: *Port* em *Junon Polis*',
