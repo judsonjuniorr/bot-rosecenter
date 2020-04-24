@@ -23,17 +23,17 @@ class Logger {
       }),
       new Winston.transports.File({
         level: 'info',
-        filename: path.resolve(__dirname, '..', 'logs', 'info.log'),
+        filename: path.resolve(__dirname, '..', '..', 'logs', 'info.log'),
         ...this.fileOpts,
       }),
       new Winston.transports.File({
         level: 'warn',
-        filename: path.resolve(__dirname, '..', 'logs', 'warnings.log'),
+        filename: path.resolve(__dirname, '..', '..', 'logs', 'warnings.log'),
         ...this.fileOpts,
       }),
       new Winston.transports.File({
         level: 'error',
-        filename: path.resolve(__dirname, '..', 'logs', 'errors.log'),
+        filename: path.resolve(__dirname, '..', '..', 'logs', 'errors.log'),
         ...this.fileOpts,
       }),
     ],
