@@ -56,23 +56,22 @@ class HelpCommand implements Command {
       );
 
       await originalMessage.reply(embed);
-      return;
-    }
-
-    const matchedCommand = this.commands.find(command =>
-      command.commandNames.includes(commandContext.args[0]),
-    );
-
-    if (!matchedCommand) {
-      await commandContext.originalMessage.reply(
-        `Desculpe mas não reconheci esse comando, digite ${commandPrefix}help e conheça os comandos disponíveis`,
+    } else {
+      const matchedCommand = this.commands.find(command =>
+        command.commandNames.includes(commandContext.args[0]),
       );
-      throw Error('Comando não reconhecido.');
-    }
-    if (this.commands.includes(matchedCommand)) {
-      await commandContext.originalMessage.reply(
-        this.buildHelpMessageForCommand(matchedCommand, commandContext),
-      );
+
+      if (!matchedCommand) {
+        await commandContext.originalMessage.reply(
+          `Desculpe mas não reconheci esse comando, digite ${commandPrefix}help e conheça os comandos disponíveis`,
+        );
+        throw Error('Comando não reconhecido.');
+      }
+      if (this.commands.includes(matchedCommand)) {
+        await commandContext.originalMessage.reply(
+          this.buildHelpMessageForCommand(matchedCommand, commandContext),
+        );
+      }
     }
   }
 

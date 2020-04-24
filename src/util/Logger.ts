@@ -61,7 +61,11 @@ class Logger {
     return this.logger;
   }
 
-  item({ request, query }: ItemRequest): Winston.Logger {
+  private createLogger(
+    label: string,
+    request: string,
+    query: string,
+  ): Winston.Logger {
     const {
       combine,
       timestamp: timestampp,
@@ -69,14 +73,22 @@ class Logger {
       printf,
     } = Winston.format;
 
-    const itemFormat = printf(({ level, message, label, timestamp }) => {
-      return `${timestamp} [${label}] ${level}: User: ${request} | Query: ${query} | ${message}`;
+    const format = printf(({ level, message, label: labelF, timestamp }) => {
+      return `${timestamp} [${labelF}] ${level}: User: ${request} | Query: ${query} | ${message}`;
     });
 
     return Winston.createLogger({
-      format: combine(labell({ label: 'ITEM' }), timestampp(), itemFormat),
+      format: combine(labell({ label }), timestampp(), format),
       ...this.config,
     });
+  }
+
+  item({ request, query }: ItemRequest): Winston.Logger {
+    return this.createLogger('ITEM', request, query);
+  }
+
+  mob({ request, query }: ItemRequest): Winston.Logger {
+    return this.createLogger('MOB', request, query);
   }
 }
 

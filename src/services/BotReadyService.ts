@@ -3,6 +3,8 @@ import path from 'path';
 
 import BotConfig from '../config/botConfig';
 
+import ScheduleMessages from './ScheduledMessages';
+
 class BotReadyService {
   private bot: Client;
 
@@ -34,6 +36,11 @@ class BotReadyService {
           ),
         );
       }
+
+      const scheduleMessage = new ScheduleMessages(this.bot);
+      scheduleMessage.iz();
+      scheduleMessage.factionWar();
+      scheduleMessage.dragonHunt();
     });
   }
 }
