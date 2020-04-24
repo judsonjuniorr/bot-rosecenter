@@ -14,9 +14,9 @@ class ScheduledMessages {
 
   constructor(client: Client) {
     this.client = client;
-    // this.channels.push('630536497807884302'); // geral RoseOn
-    this.channels.push('698959005833494579'); // staff rosecenter RoseOn
-    this.channels.push('699698186734010471'); // geral Server Teste
+    this.channels.push('630536497807884302'); // geral RoseOn
+    // this.channels.push('698959005833494579'); // staff rosecenter RoseOn
+    // this.channels.push('699698186734010471'); // geral Server Teste
   }
 
   public iz(): void {
@@ -36,10 +36,10 @@ class ScheduledMessages {
 
       // Ultimo min
       this.schedule({
-        time: '9 20 * * *',
+        time: '5 20 * * *',
         channel,
         message:
-          '@everyone AS INSCRIÇÕES PARA A **INVASÃO DE ZANT** SE ENCERRAM EM **1min**!!\nNÃO FIQUE DE FORA DESSA',
+          '@everyone AS INSCRIÇÕES PARA A **INVASÃO DE ZANT** SE ENCERRAM EM **5min**!!\nNÃO FIQUE DE FORA DESSA',
       });
 
       // Abertura do portal
@@ -71,10 +71,10 @@ class ScheduledMessages {
 
       // Ultimo min
       this.schedule({
-        time: '59 21 * * *',
+        time: '50 21 * * *',
         channel,
         message:
-          '@everyone AS INSCRIÇÕES PARA A **FACTION WAR** SE ENCERRAM EM **1min**!!\nNÃO FIQUE DE FORA DESSA',
+          '@everyone AS INSCRIÇÕES PARA A **FACTION WAR** SE ENCERRAM EM **10min**!!\nNÃO FIQUE DE FORA DESSA',
       });
 
       // Abertura do portal
@@ -100,12 +100,12 @@ class ScheduledMessages {
       const schedules = [
         {
           subscription: '28 14 * * *',
-          lastMinute: '37 14 * * *',
+          lastMinute: '33 14 * * *',
           start: '38 14 * * *',
         },
         {
           subscription: '28 20 * * *',
-          lastMinute: '37 20 * * *',
+          lastMinute: '33 20 * * *',
           start: '38 20 * * *',
         },
       ];
@@ -124,7 +124,7 @@ class ScheduledMessages {
           time: time.lastMinute,
           channel,
           message:
-            '@everyone AS INSCRIÇÕES PARA A **CAÇA AO DRAGÃO** SE ENCERRAM EM **1min**!!\nNÃO FIQUE DE FORA DESSA',
+            '@everyone AS INSCRIÇÕES PARA A **CAÇA AO DRAGÃO** SE ENCERRAM EM **5min**!!\nNÃO FIQUE DE FORA DESSA',
         });
 
         // Abertura do portal
@@ -132,7 +132,7 @@ class ScheduledMessages {
           time: time.start,
           channel,
           message:
-            '@everyone UM PORTAL PARA A **CAÇA AO DRAGÃO** SE ABRIU!!\nCHEGOU A HORA DE VENCER ESSA GUERRA!',
+            '@everyone UM PORTAL PARA A **CAÇA AO DRAGÃO** SE ABRIU!!\nCHEGOU A HORA DE VENCER ESSA BATALHA!',
         });
 
         return true;
