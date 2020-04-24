@@ -16,7 +16,7 @@ class ScheduledMessages {
     this.client = client;
     this.channels.push('630536497807884302'); // geral RoseOn
     // this.channels.push('698959005833494579'); // staff rosecenter RoseOn
-    this.channels.push('699698186734010471'); // geral Server Teste
+    // this.channels.push('699698186734010471'); // geral Server Teste
   }
 
   public iz(): void {
@@ -27,29 +27,12 @@ class ScheduledMessages {
 
       if (!channel) return undefined;
 
-      this.schedule({
+      return this.schedule({
         time: '0 20 * * *',
         channel,
         message:
-          '@everyone BOOOOOOORA QUE VAI COMEÇAR A **INVASÃO DE ZANT**!!\n CORRE LOGO QUE AS INSCRIÇÕES JÁ ESTÃO LIBERADAS!!\n\nNPC de Inscrição: *Port* em *Junon Polis*',
+          '@everyone 🏅 __**INVASÃO DE ZANT**__\n\nAS INSCRIÇÕES JÁ ESTÃO LIBERADAS!!\nNPC: **Port** em *Junon Polis*',
       });
-
-      // Ultimo min
-      this.schedule({
-        time: '5 20 * * *',
-        channel,
-        message:
-          '@everyone AS INSCRIÇÕES PARA A **INVASÃO DE ZANT** SE ENCERRAM EM **5min**!!\nNÃO FIQUE DE FORA DESSA',
-      });
-
-      // Abertura do portal
-      this.schedule({
-        time: '13 20 * * *',
-        channel,
-        message: '@everyone O PORTAL PARA A **INVASÃO DE ZANT** SE ABRIU!!',
-      });
-
-      return true;
     });
   }
 
@@ -62,30 +45,12 @@ class ScheduledMessages {
       if (!channel) return undefined;
 
       // Inscrições
-      this.schedule({
+      return this.schedule({
         time: '30 21 * * *',
         channel,
         message:
-          '@everyone BOOOOOOORA QUE VAI COMEÇAR A **GUERRA DE FACÇÕES**!!\n CORRE LOGO QUE AS INSCRIÇÕES JÁ ESTÃO LIBERADAS!!',
+          '@everyone 🏆 __**GUERRA DE FACÇÕES**__\n\nAS INSCRIÇÕES JÁ ESTÃO LIBERADAS!!\nNPC: **Port** em *Junon Polis*',
       });
-
-      // Ultimo min
-      this.schedule({
-        time: '50 21 * * *',
-        channel,
-        message:
-          '@everyone AS INSCRIÇÕES PARA A **FACTION WAR** SE ENCERRAM EM **10min**!!\nNÃO FIQUE DE FORA DESSA',
-      });
-
-      // Abertura do portal
-      this.schedule({
-        time: '0 22 * * *',
-        channel,
-        message:
-          '@everyone UM PORTAL PARA A **FACTION WAR** SE ABRIU EM JUNON!!\nCHEGOU A HORA DE VENCER ESSA GUERRA!',
-      });
-
-      return true;
     });
   }
 
@@ -97,47 +62,17 @@ class ScheduledMessages {
 
       if (!channel) return undefined;
 
-      const schedules = [
-        {
-          subscription: '28 14 * * *',
-          lastMinute: '33 14 * * *',
-          start: '38 14 * * *',
-        },
-        {
-          subscription: '28 20 * * *',
-          lastMinute: '33 20 * * *',
-          start: '38 20 * * *',
-        },
-      ];
+      const schedules = ['28 14 * * *', '28 20 * * *'];
 
-      schedules.map(time => {
+      return schedules.map(time => {
         // Inscrições
-        this.schedule({
-          time: time.subscription,
+        return this.schedule({
+          time,
           channel,
           message:
-            '@everyone BOOOOOOORA QUE VAI COMEÇAR A **CAÇA AO DRAGÃO**!!\n CORRE LOGO QUE AS INSCRIÇÕES JÁ ESTÃO LIBERADAS!!\n\nNPC de Inscrição: *Magalen* em *Junon*',
+            '@everyone 🐉 __**CAÇA AO DRAGÃO**__\n\nAS INSCRIÇÕES JÁ ESTÃO LIBERADAS!!\nNPC: **Magalen** em *Junon Polis*',
         });
-
-        // Ultimo min
-        this.schedule({
-          time: time.lastMinute,
-          channel,
-          message:
-            '@everyone AS INSCRIÇÕES PARA A **CAÇA AO DRAGÃO** SE ENCERRAM EM **5min**!!\nNÃO FIQUE DE FORA DESSA',
-        });
-
-        // Abertura do portal
-        this.schedule({
-          time: time.start,
-          channel,
-          message:
-            '@everyone UM PORTAL PARA A **CAÇA AO DRAGÃO** SE ABRIU!!\nCHEGOU A HORA DE VENCER ESSA BATALHA!',
-        });
-
-        return true;
       });
-      return true;
     });
   }
 
