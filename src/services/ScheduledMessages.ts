@@ -14,7 +14,8 @@ class ScheduledMessages {
 
   constructor(client: Client) {
     this.client = client;
-    this.channels.push('630536497807884302'); // geral RoseOn
+    // this.channels.push('630536497807884302'); // geral RoseOn
+    this.channels.push('698959005833494579'); // staff rosecenter RoseOn
     this.channels.push('699698186734010471'); // geral Server Teste
   }
 
