@@ -1,4 +1,4 @@
-import { Message, Client } from 'discord.js';
+import { Message, Client, TextChannel } from 'discord.js';
 import Command from './Command';
 import CommandContext from '../util/CommandContext';
 
@@ -25,6 +25,12 @@ class CommandHandler {
     const matchedCommand = this.commands.find(command =>
       command.commandNames.includes(commandContext.parsedCommandName),
     );
+
+    const { name, guild } = commandContext.originalMessage
+      .channel as TextChannel;
+    const allowedChannels = ['rosecenter', 'rc-staff'];
+    if (!allowedChannels.includes(name) && guild.id !== '699698186734010468')
+      return;
 
     if (!matchedCommand) {
       await message.reply(`Comando não encontrado. Digite **${prefix}help**`);
