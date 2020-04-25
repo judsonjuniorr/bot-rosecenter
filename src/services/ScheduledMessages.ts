@@ -49,7 +49,7 @@ class ScheduledMessages {
         time: '30 21 * * *',
         channel,
         message:
-          '@everyone 🏆 __**GUERRA DE FACÇÕES**__\n\nAS INSCRIÇÕES JÁ ESTÃO LIBERADAS!!\nNPC: **Port** em *Junon Polis*',
+          '@everyone 🏆 __**GUERRA DE FACÇÕES**__\n\nAS INSCRIÇÕES JÁ ESTÃO LIBERADAS!!\nNPC: **Port** em *Junon Polis*\n\nO portal irá se abrir as **22h**',
       });
     });
   }
