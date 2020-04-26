@@ -45,12 +45,21 @@ class ScheduledMessages {
       if (!channel) return undefined;
 
       // Inscrições
-      return this.schedule({
+      this.schedule({
         time: '30 21 * * *',
         channel,
         message:
-          '@everyone 🏆 __**GUERRA DE FACÇÕES**__\n\nAS INSCRIÇÕES JÁ ESTÃO LIBERADAS!!\nNPC: **Port** em *Junon Polis*\n\nO portal irá se abrir as **22h**',
+          "@everyone 🏆 __**GUERRA DE FACÇÕES**__ 🏆\n\nAs inscrições já estão liberadas nos npc's abaixo:\n**Ferrell Guild** ❯ *Arothel*\n**Righteous Crusader** ❯ *Gawain*\n**Junon Order** ❯ *Raw*\n**Arumic** ❯ *Chester*\n\nO portal irá se abrir as **22h**",
       });
+
+      this.schedule({
+        time: '50 21 * * *',
+        channel,
+        message:
+          "@everyone 🏆 __**GUERRA DE FACÇÕES**__ 🏆\n\n**FALTAM 10 MINUTOS PARA ENCERRAR AS INSCRIÇÕES!**\n\nInscrições nos npc's abaixo:\n**Ferrell Guild** ❯ *Arothel*\n**Righteous Crusader** ❯ *Gawain*\n**Junon Order** ❯ *Raw*\n**Arumic** ❯ *Chester*\n\nO portal irá se abrir as **22h**",
+      });
+
+      return true;
     });
   }
 
