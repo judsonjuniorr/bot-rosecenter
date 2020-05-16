@@ -71,7 +71,7 @@ class ScheduledMessages {
 
       if (!channel) return undefined;
 
-      const schedules = ['28 14 * * *', '28 20 * * *'];
+      const schedules = ['00 13 * * *', '28 19 * * *'];
 
       return schedules.map(time => {
         // Inscrições
