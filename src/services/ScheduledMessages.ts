@@ -63,6 +63,26 @@ class ScheduledMessages {
     });
   }
 
+  public jmv(): void {
+    this.channels.map(channelToSend => {
+      const channel = this.client.channels.cache.find(
+        c => c.id === channelToSend,
+      );
+
+      if (!channel) return undefined;
+
+      // Inscrições
+      this.schedule({
+        time: '45 22 * * *',
+        channel,
+        message:
+          '@everyone 🏆 __**JMV**__ 🏆\n\nAS INSCRIÇÕES JÁ ESTÃO LIBERADAS!!\nNPC: **Port** em *Junon Polis*',
+      });
+
+      return true;
+    });
+  }
+
   public dragonHunt(): void {
     this.channels.map(channelToSend => {
       const channel = this.client.channels.cache.find(

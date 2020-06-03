@@ -25,7 +25,14 @@ class BotReadyService {
 
       await user?.setUsername(process.env.BOT_NAME || 'RoseCenter');
       await user?.setStatus('online');
-      await user?.setActivity('Rose Online Brasil', { type: 'PLAYING' });
+
+      const activitiesList = ['Rose Online Brasil', 'http://roseonline.com.br'];
+      setInterval(async () => {
+        const index = Math.floor(
+          Math.random() * (activitiesList.length - 1) + 1,
+        );
+        await user?.setActivity(activitiesList[index], { type: 'PLAYING' });
+      }, 10000);
 
       if (!user?.avatar) {
         await user?.setAvatar(
@@ -41,6 +48,7 @@ class BotReadyService {
       scheduleMessage.iz();
       scheduleMessage.factionWar();
       scheduleMessage.dragonHunt();
+      scheduleMessage.jmv();
     });
   }
 }
