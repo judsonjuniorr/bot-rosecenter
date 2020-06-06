@@ -31,6 +31,7 @@ class BotReadyService {
         'roseonline.com.br',
         'rc.help',
       ];
+      await user?.setActivity(activitiesList[0], { type: 'PLAYING' });
       setInterval(async () => {
         const index = Math.floor(Math.random() * (activitiesList.length - 1));
         await user?.setActivity(activitiesList[index], { type: 'PLAYING' });
