@@ -54,11 +54,13 @@ export default class Web {
       const account = `${req.query.account}`;
       const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-      if (!req.query.account) return res.status(400).send();
+      if (!req.query.account)
+        return res.redirect('http://www.roseonline.com.br/');
 
       const userExists = await this.webDB.findPrepare(account);
 
-      if (userExists && userExists.discord_id) return res.status(400).send();
+      if (userExists && userExists.discord_id)
+        return res.redirect('http://www.roseonline.com.br/');
 
       if (!userExists)
         await this.webDB.prepareUser({ ip: `${ip}`, account_name: account });
