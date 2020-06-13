@@ -109,16 +109,15 @@ export default class Web {
 
         if (userFound && verifiedRole) await userFound.roles.add(verifiedRole);
 
-        if (ip)
-          await this.webDB.userDiscordID({
-            ip: `${ip}`,
-            discord_id: user.data.id,
-          });
+        await this.webDB.userDiscordID({
+          ip: `${ip}`,
+          discord_id: user.data.id,
+        });
 
-        return res.json({ status: 'Player verified', user: user.data });
+        return res.redirect('http://www.roseonline.com.br/');
       } catch (error) {
         console.log(error);
-        return res.status(400).json({ error: error.message });
+        return res.redirect('http://www.roseonline.com.br/');
       }
     });
   }
