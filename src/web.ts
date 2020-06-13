@@ -34,12 +34,10 @@ export default class Web {
     const whitelist = [
       'http://www.roseonline.com.br',
       'http://roseonline.com.br',
-      'https://45.55.49.211:3005',
-      'http://45.55.49.211:3005',
     ];
     const corsOptions = {
       origin(origin: any, callback: any): void {
-        if (whitelist.indexOf(origin) !== -1) {
+        if (whitelist.indexOf(origin) !== -1 || !origin) {
           callback(null, true);
         } else {
           callback(new Error('Not allowed by CORS'));
