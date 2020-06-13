@@ -1,6 +1,7 @@
 import express, { Express } from 'express';
 import Discord from 'discord.js';
 import axios from 'axios';
+import cors from 'cors';
 
 import WebDB from './webDB';
 
@@ -30,6 +31,21 @@ export default class Web {
   }
 
   private middlewares(): void {
+    const whitelist = [
+      'http://www.roseonline.com.br',
+      'http://roseonline.com.br/',
+    ];
+    const corsOptions = {
+      origin(origin: any, callback: any): void {
+        if (whitelist.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS'));
+        }
+      },
+    };
+
+    this.app.use(cors(corsOptions));
     this.app.use(express.json());
   }
 
