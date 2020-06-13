@@ -4,6 +4,7 @@ import path from 'path';
 import BotConfig from '../config/botConfig';
 
 import ScheduleMessages from './ScheduledMessages';
+import Web from '../web';
 
 class BotReadyService {
   private bot: Client;
@@ -52,6 +53,8 @@ class BotReadyService {
       scheduleMessage.factionWar();
       scheduleMessage.dragonHunt();
       scheduleMessage.jmv();
+
+      new Web(this.bot).initialize();
     });
   }
 }
