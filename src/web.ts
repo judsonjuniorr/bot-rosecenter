@@ -18,6 +18,9 @@ export default class Web {
 
   private webDB: WebDB;
 
+  private redirectPostUrl =
+    'http://www.roseonline.com.br/cadastro/Painel_Controle.aspx';
+
   constructor(discordBot: Discord.Client) {
     this.bot = discordBot;
     this.app = express();
@@ -54,13 +57,12 @@ export default class Web {
       const account = `${req.query.account}`;
       const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 
-      if (!req.query.account)
-        return res.redirect('http://www.roseonline.com.br/');
+      if (!req.query.account) return res.redirect(this.redirectPostUrl);
 
       const userExists = await this.webDB.findPrepare(account);
 
       if (userExists && userExists.discord_id)
-        return res.redirect('http://www.roseonline.com.br/');
+        return res.redirect(this.redirectPostUrl);
 
       if (!userExists)
         await this.webDB.prepareUser({ ip: `${ip}`, account_name: account });
@@ -116,10 +118,10 @@ export default class Web {
           discord_id: user.data.id,
         });
 
-        return res.redirect('http://www.roseonline.com.br/');
+        return res.redirect(this.redirectPostUrl);
       } catch (error) {
         console.log(error);
-        return res.redirect('http://www.roseonline.com.br/');
+        return res.redirect(this.redirectPostUrl);
       }
     });
   }
