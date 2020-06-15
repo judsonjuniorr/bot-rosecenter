@@ -1,19 +1,19 @@
 import { Client } from 'discord.js';
 
-import Command from './Command';
+import ICommand from './Command';
 import CommandContext from '../util/CommandContext';
 import EmbedMessage from '../util/EmbedMessage';
 
-class HelpCommand implements Command {
+class HelpCommand implements ICommand {
   commandNames = ['help', 'halp', 'hlep'];
 
   commandHelp = 'help (comando desejado)';
 
-  private commands: Command[];
+  private commands: ICommand[];
 
   private bot: Client;
 
-  constructor(commands: Command[], bot: Client) {
+  constructor(commands: ICommand[], bot: Client) {
     this.commands = commands;
     this.bot = bot;
   }
@@ -30,14 +30,23 @@ class HelpCommand implements Command {
       const embed = new EmbedMessage().generateEmbed({
         author: { name: botName, avatarURL: botAvatar || undefined },
       });
+      const guildMember = await originalMessage.guild?.member(
+        originalMessage.author,
+      );
 
       // Adicionar comandos ao embed
       let commandList = `Aqui se encontra uma lista de comandos que você poderá utilizar.\n\n`;
       if (this.commands.length > 0)
         this.commands.map((command, index) => {
-          commandList += `**${
-            commandPrefix + command.commandHelp
-          }** - *${command.getHelpMessage()}*`;
+          if (
+            (command.commandPermission &&
+              guildMember?.hasPermission(command.commandPermission)) ||
+            !command.commandPermission
+          ) {
+            commandList += `**${
+              commandPrefix + command.commandHelp
+            }** - *${command.getHelpMessage()}*`;
+          }
 
           if (index + 1 !== this.commands.length) commandList += '\n';
           return commandList;
@@ -55,7 +64,18 @@ class HelpCommand implements Command {
         'https://discord.gg/teyJu4y',
       );
 
-      await originalMessage.reply(embed);
+      // await originalMessage.delete();
+      console.log(originalMessage.guild?.emojis.cache);
+      try {
+        const dm = await guildMember?.createDM();
+        await dm?.send(embed);
+        await originalMessage.react('🇩');
+        await originalMessage.react('🇲');
+      } catch (error) {
+        await originalMessage.reply(
+          'Ative as mensagens diretas para receber os comandos',
+        );
+      }
     } else {
       const matchedCommand = this.commands.find(command =>
         command.commandNames.includes(commandContext.args[0]),
@@ -76,7 +96,7 @@ class HelpCommand implements Command {
   }
 
   private buildHelpMessageForCommand(
-    command: Command,
+    command: ICommand,
     context: CommandContext,
   ): string {
     return `${command.getHelpMessage(

@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/app.js",
+    "start": "node -r tsconfig-paths/register --transpileOnly dist/app.js",
     "dev:server": "ts-node-dev -r tsconfig-paths/register --transpileOnly --ignore-watch node_modules src/app.ts"
   },
   "dependencies": {
@@ -16,7 +16,6 @@
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "module-alias": "^2.2.2",
     "mongoose": "^5.9.18",
     "mysql": "^2.18.1",
     "node-cron": "^2.0.3",
@@ -42,9 +41,5 @@
     "prettier": "^2.0.4",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.3"
-  },
-  "_moduleAliases": {
-    "@web": "dist/web",
-    "@config": "dist/config"
   }
 }

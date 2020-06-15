@@ -1,10 +1,12 @@
-import { Client } from 'discord.js';
+import { Client, PermissionString } from 'discord.js';
 import CommandContext from '../util/CommandContext';
 
-export default interface Command {
+export default interface ICommand {
   readonly commandNames: string[];
 
   readonly commandHelp: string;
+
+  readonly commandPermission?: PermissionString | undefined;
 
   /** Usage documentation. */
   getHelpMessage(commandPrefix?: string): string;

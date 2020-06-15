@@ -28,11 +28,7 @@ class BotReadyService {
       await user?.setUsername(process.env.BOT_NAME || 'RoseCenter');
       await user?.setStatus('online');
 
-      const activitiesList = [
-        'Rose Online Brasil',
-        'roseonline.com.br',
-        'rc.help',
-      ];
+      const activitiesList = ['Rose Online Brasil', 'roseonline.com.br'];
       await user?.setActivity(activitiesList[0], { type: 'PLAYING' });
       setInterval(async () => {
         const index = Math.floor(Math.random() * (activitiesList.length - 1));
