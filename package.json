@@ -16,11 +16,12 @@
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "module-alias": "^2.2.2",
     "mongoose": "^5.9.18",
     "mysql": "^2.18.1",
     "node-cron": "^2.0.3",
-    "winston": "^3.2.1",
-    "tsconfig-paths": "^3.9.0"
+    "tsconfig-paths": "^3.9.0",
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^5.4.0",
@@ -41,5 +42,9 @@
     "prettier": "^2.0.4",
     "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.3"
+  },
+  "_moduleAliases": {
+    "@web": "dist/web",
+    "@config": "dist/config"
   }
 }
