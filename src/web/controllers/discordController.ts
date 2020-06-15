@@ -4,6 +4,7 @@ import axios from 'axios';
 import UsersRepository from '@web/database/repository/UsersRepository';
 import DiscordRepository from '@web/database/repository/DiscordRepository';
 import { IUser } from '@web/database/entities/User';
+import BannedsRepository from '@web/database/repository/BannedRepository';
 
 export default class DiscordController {
   public async login(req: Request, res: Response): Promise<void> {
@@ -83,8 +84,16 @@ export default class DiscordController {
 
       const usersRepository = new UsersRepository();
       const discordRepository = new DiscordRepository(req.bot);
+      const bannedsRepository = new BannedsRepository();
 
-      console.log({ userData, discordUser });
+      const isBanned = await bannedsRepository.isBanned(discordUser.id);
+
+      if (isBanned) {
+        console.log(
+          `User ${discordName} banned! Account: ${userData?.identifier}`,
+        );
+        return res.redirect(redirectPostUrl);
+      }
 
       if (userData?.discordID) {
         const discordID = await usersRepository.findByDiscordID(
