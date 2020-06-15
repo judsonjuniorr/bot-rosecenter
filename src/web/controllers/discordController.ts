@@ -84,22 +84,28 @@ export default class DiscordController {
       const usersRepository = new UsersRepository();
       const discordRepository = new DiscordRepository(req.bot);
 
-      if (userData.discordID) {
+      console.log({ userData, discordUser });
+
+      if (userData?.discordID) {
         const discordID = await usersRepository.findByDiscordID(
           userData.discordID,
         );
-        if (discordID.length === 1)
+        if (discordID.length === 1) {
+          console.log(
+            `Remove perms for ${discordName} - account: ${userData?.identifier}`,
+          );
           await discordRepository.removePerms(discordUser.id);
+        }
       }
 
       await discordRepository.addPerms(discordUser.id);
 
       await usersRepository.updateDiscordID({
-        identifier: userData.identifier,
+        identifier: userData?.identifier,
         discordID: discordUser.id,
       });
 
-      console.log(`Account ${userData.identifier} verified, ${discordName}`);
+      console.log(`Account ${userData?.identifier} verified, ${discordName}`);
       return res.redirect(redirectPostUrl);
     } catch (error) {
       console.log(error);
