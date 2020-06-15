@@ -1,10 +1,11 @@
 import { Client } from 'discord.js';
 import path from 'path';
 
+import Web from '@web/index';
+
 import BotConfig from '../config/botConfig';
 
 import ScheduleMessages from './ScheduledMessages';
-import Web from '../web';
 
 class BotReadyService {
   private bot: Client;

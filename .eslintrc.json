@@ -24,7 +24,11 @@
     "no-console": "off",
     "prettier/prettier": "error",
     "import/extensions": ["error", "ignorePackages", { "ts": "never" }],
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "@typescript-eslint/interface-name-prefix": [
+      "error",
+      { "prefixWithI": "always" }
+    ]
   },
   "settings": {
     "import/resolver": {
