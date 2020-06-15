@@ -59,6 +59,11 @@ export default class DiscordController {
     const stateParsed = Buffer.from(state, 'base64').toString('ascii');
     const userData = JSON.parse(stateParsed) as IUser;
 
+    if (!userData.identifier) {
+      console.log(`Identifier not found`);
+      return res.redirect(redirectPostUrl);
+    }
+
     try {
       const params = new URLSearchParams();
       params.append('client_id', `${client_id}`);
