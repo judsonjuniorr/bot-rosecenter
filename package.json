@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "node -r tsconfig-paths/register --transpileOnly dist/app.js",
+    "start": "node -r ts-node/register/transpile-only -r tsconfig-paths/register dist/app.js",
     "dev:server": "ts-node-dev -r tsconfig-paths/register --transpileOnly --ignore-watch node_modules src/app.ts"
   },
   "dependencies": {
@@ -19,6 +19,7 @@
     "mongoose": "^5.9.18",
     "mysql": "^2.18.1",
     "node-cron": "^2.0.3",
+    "ts-node": "^8.10.2",
     "tsconfig-paths": "^3.9.0",
     "winston": "^3.2.1"
   },
