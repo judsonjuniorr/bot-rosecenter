@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import UsersRepository from '@web/database/repository/UsersRepository';
 import DiscordRepository from '@web/database/repository/DiscordRepository';
+import { IUser } from '@web/database/entities/User';
 
 export default class DiscordController {
   public async login(req: Request, res: Response): Promise<void> {
@@ -27,15 +28,20 @@ export default class DiscordController {
       await usersRepository.createUser({ identifier: account, ip });
     else await usersRepository.updateIP({ identifier: account, ip });
 
+    const state = JSON.stringify(userExists);
+    const stateParsed = Buffer.from(state).toString('base64');
+
     return res.redirect(
       `https://discord.com/api/oauth2/authorize?client_id=${client_id}&redirect_uri=${encodeURIComponent(
         redirect_url,
-      )}&response_type=code&scope=identify`,
+      )}&response_type=code&scope=identify&state=${stateParsed}`,
     );
   }
 
   public async verify(req: Request, res: Response): Promise<void> {
     const { code } = req.query;
+    const state =
+      typeof req.query.state === 'string' ? req.query.state : undefined;
     const client_id = process.env.CLIENT_ID || '';
     const client_secret = process.env.CLIENT_SECRET || '';
     const redirect_url = process.env.REDIRECT_URL || '';
@@ -43,6 +49,14 @@ export default class DiscordController {
       'http://www.roseonline.com.br/cadastro/Painel_Controle.aspx';
     let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     if (typeof ip !== 'string') ip = '';
+
+    if (!state) {
+      console.log(`State data not found`);
+      return res.redirect(redirectPostUrl);
+    }
+
+    const stateParsed = Buffer.from(state, 'base64').toString('ascii');
+    const userData = JSON.parse(stateParsed) as IUser;
 
     try {
       const params = new URLSearchParams();
@@ -61,9 +75,7 @@ export default class DiscordController {
 
       const discordUserRequest = await axios.get(
         'https://discord.com/api/v6/users/@me',
-        {
-          headers: { Authorization: `Bearer ${response.data.access_token}` },
-        },
+        { headers: { Authorization: `Bearer ${response.data.access_token}` } },
       );
 
       const discordUser = discordUserRequest.data;
@@ -72,14 +84,10 @@ export default class DiscordController {
       const usersRepository = new UsersRepository();
       const discordRepository = new DiscordRepository(req.bot);
 
-      const user = await usersRepository.findByIP(ip);
-      if (!user) {
-        console.log(`User IP not found for ${discordName}`);
-        return res.redirect(redirectPostUrl);
-      }
-
-      if (user.discordID) {
-        const discordID = await usersRepository.findByDiscordID(user.discordID);
+      if (userData.discordID) {
+        const discordID = await usersRepository.findByDiscordID(
+          userData.discordID,
+        );
         if (discordID.length === 1)
           await discordRepository.removePerms(discordUser.id);
       }
@@ -87,11 +95,11 @@ export default class DiscordController {
       await discordRepository.addPerms(discordUser.id);
 
       await usersRepository.updateDiscordID({
-        identifier: user.identifier,
+        identifier: userData.identifier,
         discordID: discordUser.id,
       });
 
-      console.log(`Account ${user.identifier} verified, ${discordName}`);
+      console.log(`Account ${userData.identifier} verified, ${discordName}`);
       return res.redirect(redirectPostUrl);
     } catch (error) {
       console.log(error);

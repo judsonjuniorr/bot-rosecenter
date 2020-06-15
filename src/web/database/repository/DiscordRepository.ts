@@ -25,13 +25,6 @@ export default class DiscordRepository {
       discordUser => discordUser.id === userID,
     );
 
-    console.log({
-      members: this.guild?.members.cache,
-      userID,
-      user,
-      role: this.role,
-    });
-
     if (user && this.role) await user.roles.remove(this.role);
   }
 
