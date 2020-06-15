@@ -67,7 +67,7 @@ export default class DiscordController {
       );
 
       const discordUser = discordUserRequest.data;
-      const discordName = `${discordUser.data.username}#${discordUser.data.discriminator}`;
+      const discordName = `${discordUser.username}#${discordUser.discriminator}`;
 
       const usersRepository = new UsersRepository();
       const discordRepository = new DiscordRepository(req.bot);
