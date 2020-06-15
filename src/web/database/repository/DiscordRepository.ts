@@ -10,7 +10,11 @@ export default class DiscordRepository {
   constructor(discordBot: Client) {
     this.bot = discordBot;
     const guilds = this.bot.guilds.cache;
-    this.guild = guilds.find(guild => guild.name === 'RoseOnBr - Oficial');
+    const guildName =
+      process.env.NODE_ENV === 'development'
+        ? 'RoseCenter'
+        : 'RoseOnBr - Oficial';
+    this.guild = guilds.find(guild => guild.name === guildName);
     this.role = this.guild?.roles.cache.find(
       role => role.name === 'Player verificado',
     );
@@ -20,6 +24,13 @@ export default class DiscordRepository {
     const user = this.guild?.members.cache.find(
       discordUser => discordUser.id === userID,
     );
+
+    console.log({
+      members: this.guild?.members.cache,
+      userID,
+      user,
+      role: this.role,
+    });
 
     if (user && this.role) await user.roles.remove(this.role);
   }
