@@ -64,8 +64,6 @@ class HelpCommand implements ICommand {
         'https://discord.gg/teyJu4y',
       );
 
-      // await originalMessage.delete();
-      console.log(originalMessage.guild?.emojis.cache);
       try {
         const dm = await guildMember?.createDM();
         await dm?.send(embed);

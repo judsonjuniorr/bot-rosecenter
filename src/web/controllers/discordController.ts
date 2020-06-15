@@ -117,7 +117,7 @@ export default class DiscordController {
       console.log(`Account ${userData?.identifier} verified, ${discordName}`);
       return res.redirect(redirectPostUrl);
     } catch (error) {
-      console.log(error);
+      console.error(`Falha na verificação.\n${stateParsed}`);
       return res.redirect(redirectPostUrl);
     }
   }
