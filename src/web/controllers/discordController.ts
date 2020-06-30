@@ -8,6 +8,7 @@ import BannedsRepository from '@web/database/repository/BannedRepository';
 
 export default class DiscordController {
   public async login(req: Request, res: Response): Promise<void> {
+    console.log({ query: req.query });
     const account =
       typeof req.query.account === 'string' ? req.query.account : undefined;
     const redirectPostUrl =
