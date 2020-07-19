@@ -11,8 +11,7 @@ export default class DiscordController {
     console.log({ query: req.query });
     const account =
       typeof req.query.account === 'string' ? req.query.account : undefined;
-    const redirectPostUrl =
-      'http://www.roseonline.com.br/cadastro/Painel_Controle.aspx';
+    const redirectPostUrl = 'http://www.roseonline.com.br/Account/ControlPanel';
     const client_id = process.env.CLIENT_ID || '';
     const redirect_url = process.env.REDIRECT_URL || '';
     let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -47,8 +46,7 @@ export default class DiscordController {
     const client_id = process.env.CLIENT_ID || '';
     const client_secret = process.env.CLIENT_SECRET || '';
     const redirect_url = process.env.REDIRECT_URL || '';
-    const redirectPostUrl =
-      'http://www.roseonline.com.br/cadastro/Painel_Controle.aspx';
+    const redirectPostUrl = 'http://www.roseonline.com.br/Account/ControlPanel';
     let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     if (typeof ip !== 'string') ip = '';
 
@@ -58,6 +56,7 @@ export default class DiscordController {
     }
 
     const stateParsed = Buffer.from(state, 'base64').toString('ascii');
+    console.log(stateParsed);
     const userData = JSON.parse(stateParsed) as IUser;
 
     if (!userData?.identifier) {

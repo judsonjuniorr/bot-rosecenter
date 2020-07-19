@@ -5,7 +5,7 @@ import CommandContext from '../util/CommandContext';
 import Database from '../util/Database';
 import EmbedMessage from '../util/EmbedMessage';
 import ItemQueryService from '../services/ItemQueryService';
-import ItemDropService from '../services/ItemDropService';
+// import ItemDropService from '../services/ItemDropService';
 import Logger from '../util/Logger';
 
 class ItemCommand implements Command {
@@ -124,13 +124,13 @@ class ItemCommand implements Command {
         await message.edit(itemEmbed);
 
         if (howToGet.includes('Drop')) {
-          const dropService = new ItemDropService({
-            drops: itemDB.dropp,
-            embed: itemEmbed,
-            db,
-            message,
-          });
-          await dropService.execute();
+          // const dropService = new ItemDropService({
+          //   drops: itemDB.dropp,
+          //   embed: itemEmbed,
+          //   db,
+          //   message,
+          // });
+          // await dropService.execute();
         }
 
         log.info('SEND');
